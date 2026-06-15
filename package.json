@@ -1,0 +1,31 @@
+{
+  "name": "saucedemo-automation-tests",
+  "version": "1.0.0",
+  "description": "Automated test suite for Sauce Labs demo application using Playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:auth": "playwright test tests/auth",
+    "test:inventory": "playwright test tests/inventory",
+    "test:cart": "playwright test tests/cart",
+    "test:checkout": "playwright test tests/checkout",
+    "test:e2e": "playwright test tests/e2e",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "codegen": "playwright codegen https://www.saucedemo.com"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "automation",
+    "e2e"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "dotenv": "^16.4.5"
+  }
+}
