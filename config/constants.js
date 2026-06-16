@@ -33,3 +33,47 @@ exports.AUTH_MESSAGES = {
   INVALID_CREDENTIALS: "Username and password do not match any user",
   LOCKED_OUT: "Sorry, this user has been locked out",
 };
+
+exports.CHECKOUT_MESSAGES = {
+  ORDER_SUCCESS: "Thank you for your order!",
+  FIRST_NAME_REQUIRED: "Error: First Name is required",
+  LAST_NAME_REQUIRED: "Error: Last Name is required",
+  POSTAL_CODE_REQUIRED: "Error: Postal Code is required",
+};
+
+exports.CHECKOUT_TEST_DATA = {
+  CUSTOMER_INFO: {
+    firstName: "John",
+    lastName: "Doe",
+    postalCode: "10001",
+  },
+  MISSING_REQUIRED_FIELD_CASES: [
+    {
+      label: "first name",
+      customerInfo: {
+        firstName: "",
+        lastName: "Doe",
+        postalCode: "10001",
+      },
+      expectedError: "Error: First Name is required",
+    },
+    {
+      label: "last name",
+      customerInfo: {
+        firstName: "John",
+        lastName: "",
+        postalCode: "10001",
+      },
+      expectedError: "Error: Last Name is required",
+    },
+    {
+      label: "postal code",
+      customerInfo: {
+        firstName: "John",
+        lastName: "Doe",
+        postalCode: "",
+      },
+      expectedError: "Error: Postal Code is required",
+    },
+  ],
+};

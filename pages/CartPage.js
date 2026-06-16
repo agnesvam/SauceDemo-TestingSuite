@@ -11,7 +11,6 @@ class CartPage {
   constructor(page) {
     this.page = page;
 
-    // Selector variables
     this.cart_item_selector = ".cart_item";
     this.item_quantity_selector = ".cart_quantity";
     this.item_name_selector = ".inventory_item_name";
@@ -20,19 +19,11 @@ class CartPage {
     this.checkout_button_selector = '[data-test="checkout"]';
     this.continue_shopping_button_selector = '[data-test="continue-shopping"]';
 
-    // Cart item locators
     /** @type {import('@playwright/test').Locator} */
     this.cart_items = page.locator(this.cart_item_selector);
     /** @type {import('@playwright/test').Locator} */
-    this.item_quantities = page.locator(this.item_quantity_selector);
-    /** @type {import('@playwright/test').Locator} */
     this.item_names = page.locator(this.item_name_selector);
-    /** @type {import('@playwright/test').Locator} */
-    this.item_descriptions = page.locator(this.item_description_selector);
-    /** @type {import('@playwright/test').Locator} */
-    this.item_prices = page.locator(this.item_price_selector);
 
-    // Action buttons
     /** @type {import('@playwright/test').Locator} */
     this.button_checkout = page.locator(this.checkout_button_selector);
     /** @type {import('@playwright/test').Locator} */
@@ -100,19 +91,6 @@ class CartPage {
    */
   async clickContinueShopping() {
     await this.button_continue_shopping.click();
-  }
-
-  // Backward-compatible aliases
-  async itemCount() {
-    return this.getItemCount();
-  }
-
-  async itemNames() {
-    return this.getItemNames();
-  }
-
-  async itemDetails() {
-    return this.getItemDetails();
   }
 
   cartItems() {

@@ -25,6 +25,8 @@ class InventoryPage {
     this.add_to_cart_button_selector = '[data-test*="add-to-cart"]';
     this.remove_button_selector = '[data-test*="remove"]';
     this.inventory_item_name_selector = ".inventory_item_name";
+    this.inventory_item_description_selector = ".inventory_item_desc";
+    this.inventory_item_price_selector = ".inventory_item_price";
     /** @type {import('@playwright/test').Locator} */
     this.product_detail_name = page.locator(".inventory_details_name");
     /** @type {import('@playwright/test').Locator} */
@@ -97,6 +99,29 @@ class InventoryPage {
     const item = this.getInventoryItems().nth(index);
     const itemName = item.locator(this.inventory_item_name_selector);
     await itemName.click();
+  }
+
+  /**
+   * Get inventory item data by index
+   * @param {number} index - Product index in inventory list
+   * @returns {Promise<{name: string | undefined, description: string | undefined, price: string | undefined}>}
+   */
+  async getItemDataByIndex(index) {
+    const item = this.getInventoryItems().nth(index);
+
+    return {
+      name: (
+        await item.locator(this.inventory_item_name_selector).textContent()
+      )?.trim(),
+      description: (
+        await item
+          .locator(this.inventory_item_description_selector)
+          .textContent()
+      )?.trim(),
+      price: (
+        await item.locator(this.inventory_item_price_selector).textContent()
+      )?.trim(),
+    };
   }
 
   /**

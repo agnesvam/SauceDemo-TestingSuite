@@ -16,10 +16,12 @@ class CheckoutPage {
     this.last_name_selector = '[data-test="lastName"]';
     this.postal_code_selector = '[data-test="postalCode"]';
     this.continue_button_selector = '[data-test="continue"]';
-    this.finish_button_selector = '[data-test="finish"]';
     this.cancel_button_selector = '[data-test="cancel"]';
+    this.finish_button_selector = '[data-test="finish"]';
     this.error_selector = '[data-test="error"]';
     this.complete_header_selector = ".complete-header";
+    this.shopping_cart_badge_selector = ".shopping_cart_badge";
+    this.shopping_cart_link_selector = ".shopping_cart_link";
 
     // Form input locators
     /** @type {import('@playwright/test').Locator} */
@@ -33,15 +35,19 @@ class CheckoutPage {
     /** @type {import('@playwright/test').Locator} */
     this.button_continue = page.locator(this.continue_button_selector);
     /** @type {import('@playwright/test').Locator} */
-    this.button_finish = page.locator(this.finish_button_selector);
-    /** @type {import('@playwright/test').Locator} */
     this.button_cancel = page.locator(this.cancel_button_selector);
+    /** @type {import('@playwright/test').Locator} */
+    this.button_finish = page.locator(this.finish_button_selector);
 
     // Status/message locators
     /** @type {import('@playwright/test').Locator} */
     this.checkout_error = page.locator(this.error_selector);
     /** @type {import('@playwright/test').Locator} */
     this.complete_header = page.locator(this.complete_header_selector);
+    /** @type {import('@playwright/test').Locator} */
+    this.shopping_cart_badge = page.locator(this.shopping_cart_badge_selector);
+    /** @type {import('@playwright/test').Locator} */
+    this.shopping_cart_link = page.locator(this.shopping_cart_link_selector);
   }
 
   /**
@@ -59,33 +65,6 @@ class CheckoutPage {
   }
 
   /**
-   * Set first name
-   * @param {string} firstName
-   * @returns {Promise<void>}
-   */
-  async setFirstName(firstName) {
-    await this.textbox_firstName.fill(firstName);
-  }
-
-  /**
-   * Set last name
-   * @param {string} lastName
-   * @returns {Promise<void>}
-   */
-  async setLastName(lastName) {
-    await this.textbox_lastName.fill(lastName);
-  }
-
-  /**
-   * Set postal code
-   * @param {string} postalCode
-   * @returns {Promise<void>}
-   */
-  async setPostalCode(postalCode) {
-    await this.textbox_postalCode.fill(postalCode);
-  }
-
-  /**
    * Click continue button to proceed to order review
    * @returns {Promise<void>}
    */
@@ -94,19 +73,19 @@ class CheckoutPage {
   }
 
   /**
+   * Click cancel button to return to cart
+   * @returns {Promise<void>}
+   */
+  async clickCancel() {
+    await this.button_cancel.click();
+  }
+
+  /**
    * Click finish button to complete purchase
    * @returns {Promise<void>}
    */
   async clickFinish() {
     await this.button_finish.click();
-  }
-
-  /**
-   * Click cancel button to abandon checkout
-   * @returns {Promise<void>}
-   */
-  async clickCancel() {
-    await this.button_cancel.click();
   }
 
   /**
@@ -125,25 +104,27 @@ class CheckoutPage {
     return this.complete_header;
   }
 
-  // Backward-compatible aliases
-  async continue() {
-    return this.clickContinue();
+  /**
+   * Get cart badge count
+   * @returns {Promise<number>} - Number of items in cart
+   */
+  async getCartBadgeCount() {
+    try {
+      if (!(await this.shopping_cart_badge.isVisible().catch(() => false))) {
+        return 0;
+      }
+      return Number(await this.shopping_cart_badge.textContent());
+    } catch {
+      return 0;
+    }
   }
 
-  async finish() {
-    return this.clickFinish();
-  }
-
-  async cancel() {
-    return this.clickCancel();
-  }
-
-  errorMessage() {
-    return this.checkout_error;
-  }
-
-  completeHeader() {
-    return this.complete_header;
+  /**
+   * Navigate to shopping cart
+   * @returns {Promise<void>}
+   */
+  async openCart() {
+    await this.shopping_cart_link.click();
   }
 }
 
