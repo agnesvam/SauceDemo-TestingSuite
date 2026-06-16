@@ -106,9 +106,8 @@ expect(cartItem.name).toBe(productData.name);
 ---
 
 ## Project Structure
-
 ```
-testAAS/
+SauceDemo-TestingSuite/
 ├── config/
 │   └── constants.js              # Centralized test data (users, messages, checkout info)
 │
@@ -149,7 +148,7 @@ testAAS/
 ### Step 1: Clone/Download Repository
 
 ```bash
-cd testAAS
+cd SauceDemo-TestingSuite
 ```
 
 ### Step 2: Install Dependencies
